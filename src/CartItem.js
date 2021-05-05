@@ -9,6 +9,13 @@ class CartItem extends React.Component {
             qty: 1,
             img: ''
         }
+
+        // this.increaseQuantity = this.increaseQuantity.bind(this);
+        // or use increaseQuantity func as arrow func
+    }
+
+    increaseQuantity = () => {
+        console.log('this.state', this.state);
     }
     
     render() {
@@ -25,9 +32,23 @@ class CartItem extends React.Component {
 
                     <div className="cart-item-actions">
                         {/* Buttons */}
-                        <img alt="increase" className="action-icons" src="https://www.flaticon.com/svg/vstatic/svg/992/992651.svg?token=exp=1620199188~hmac=d9eba6e0233bc980703b0e4fb3818ac5"/>
-                        <img alt="decrease" className="action-icons" src="https://www.flaticon.com/svg/vstatic/svg/992/992683.svg?token=exp=1620199059~hmac=f4a3e462a2f1708008d1b2c4361b871b"/>
-                        <img alt="delete" className="action-icons" src="https://www.flaticon.com/svg/vstatic/svg/1214/1214428.svg?token=exp=1620199259~hmac=77d153aa993f1eda5a4ab9123f23c47f"/>
+                        <img 
+                        alt="increase" 
+                        className="action-icons" 
+                        src="https://www.flaticon.com/svg/vstatic/svg/992/992651.svg?token=exp=1620199188~hmac=d9eba6e0233bc980703b0e4fb3818ac5"
+                        onClick={this.increaseQuantity}
+                        />
+                        {/* bind here or in the cunstructor */}
+                        <img 
+                        alt="decrease" 
+                        className="action-icons" 
+                        src="https://www.flaticon.com/svg/vstatic/svg/992/992683.svg?token=exp=1620199059~hmac=f4a3e462a2f1708008d1b2c4361b871b"
+                        />
+                        <img 
+                        alt="delete" 
+                        className="action-icons" 
+                        src="https://www.flaticon.com/svg/vstatic/svg/1214/1214428.svg?token=exp=1620199259~hmac=77d153aa993f1eda5a4ab9123f23c47f"
+                        />
                     </div>
                 </div>
             </div>
