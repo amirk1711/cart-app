@@ -67,17 +67,32 @@ class App extends React.Component {
 	}
 
 	handleIncreaseQuantity = (product) => {
-		// console.log('Hey Cart please increase the qty of ', product);
 		const { products } = this.state;
 		const index = products.indexOf(product);
 
-		products[index].qty += 1;
+		// products[index].qty += 1;
 
-		this.setState({
-			// products: products
-			// when key name and value name is same 
-			products
-		});
+		// this.setState({
+		// 	// products: products
+		// 	// when key name and value name is same 
+		// 	products
+		// });
+
+		// instead of updating qty in state
+		// update it in the firebase by using reference 
+		// of that particular product
+
+		const docRef = this.db.collection('products').doc(products[index].id);
+		docRef
+			.update({
+				qty: products[index].qty + 1
+			})
+			.then(() => {
+				console.log('Updated successfully');
+			})
+			.catch((err) => {
+				console.log('Error: ', err);
+			});
 	}
 
 	handleDecreaseQuantity = (product) => {
@@ -87,13 +102,25 @@ class App extends React.Component {
 		if(products[index].qty === 0){
 			return;
 		}
-		products[index].qty -= 1;
+		// products[index].qty -= 1;
 
-		this.setState({
-			// products: products
-			// when key name and balue name is same 
-			products
-		});
+		// this.setState({
+		// 	// products: products
+		// 	// when key name and balue name is same 
+		// 	products
+		// });
+
+		const docRef = this.db.collection('products').doc(products[index].id);
+		docRef
+			.update({
+				qty: products[index].qty - 1
+			})
+			.then(() => {
+				console.log('Updated successfully');
+			})
+			.catch((err) => {
+				console.log('Error: ', err);
+			});
 	}
 
 	handleDeleteProduct = (id) => {
