@@ -48,6 +48,12 @@ class App extends React.Component {
 
 		this.db
 			.collection('products')
+			// to query like filter products
+			// all products whose price is exactly 999
+			// .where('price', '==', 2999)
+			// to group multiple queries
+			// .where('title', '==', 'Watch')
+			.orderBy('price', 'desc')
 			.onSnapshot((snapshot) => {
 				const products = snapshot.docs.map((doc) => {
 					const data = doc.data();
@@ -170,7 +176,7 @@ class App extends React.Component {
 				img: '',
 				price: 900,
 				qty: 3,
-				title: 'Washing Machine'
+				title: 'Camera'
 			})
 			.then((docRef) => {
 				console.log('Product has been added', docRef);
