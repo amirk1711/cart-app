@@ -11,56 +11,18 @@ class App extends React.Component {
 			products: [],
 			loading: true
 		}
-
 		this.db = firebase.firestore();
 	}
 
 	componentDidMount(){
-		// firebase
-		// 	.firestore()
-		// 	.collection('products')
-		// 	.get()
-		// 	.then((snapshot) => {
-		// 		// console.log('snapshot', snapshot.docs);
-
-		// 		// snapshot.docs.map((doc) => {
-		// 		// 	console.log('data', doc.data());
-		// 		// 	return '';
-		// 		// });
-
-		// 		const products = snapshot.docs.map((doc) => {
-		// 			const data = doc.data();
-
-		// 			data['id'] = doc.id;
-		// 			// because that doc has particular id
-
-		// 			return data;
-		// 		});
-
-		// 		this.setState({
-		// 			// products: products
-		// 			products,
-		// 			loading: false
-		// 		});
-		// 	})
-
-
-
 		this.db
 			.collection('products')
-			// to query like filter products
-			// all products whose price is exactly 999
-			// .where('price', '==', 2999)
-			// to group multiple queries
-			// .where('title', '==', 'Watch')
-			.orderBy('price', 'desc')
 			.onSnapshot((snapshot) => {
 				const products = snapshot.docs.map((doc) => {
 					const data = doc.data();
-
 					data['id'] = doc.id;
 					// because that doc has particular id
-
+                    
 					return data;
 				});
 
@@ -72,21 +34,16 @@ class App extends React.Component {
 			});
 	}
 
+    componentWillUnmount() {
+        // fix Warning: Can't perform a React state update on an unmounted component
+        this.setState = (state,callback) => {
+            return;
+        };
+    }
+    
 	handleIncreaseQuantity = (product) => {
 		const { products } = this.state;
 		const index = products.indexOf(product);
-
-		// products[index].qty += 1;
-
-		// this.setState({
-		// 	// products: products
-		// 	// when key name and value name is same 
-		// 	products
-		// });
-
-		// instead of updating qty in state
-		// update it in the firebase by using reference 
-		// of that particular product
 
 		const docRef = this.db.collection('products').doc(products[index].id);
 		docRef
@@ -105,17 +62,7 @@ class App extends React.Component {
 		const { products } = this.state;
 		const index = products.indexOf(product);
 		
-		if(products[index].qty === 0){
-			return;
-		}
-		// products[index].qty -= 1;
-
-		// this.setState({
-		// 	// products: products
-		// 	// when key name and balue name is same 
-		// 	products
-		// });
-
+		if(products[index].qty === 0){ return; }
 		const docRef = this.db.collection('products').doc(products[index].id);
 		docRef
 			.update({
@@ -130,13 +77,6 @@ class App extends React.Component {
 	}
 
 	handleDeleteProduct = (id) => {
-		// const { products } = this.state;
-		// const items = products.filter((item) => item.id !== id);
-
-		// this.setState({
-		// 	products: items
-		// })
-
 		const docRef = this.db.collection('products').doc(id);
 		docRef
 			.delete()
@@ -146,7 +86,6 @@ class App extends React.Component {
 			.catch((err) => {
 				console.log('Error: ', err);
 			});
-
 	}
 
 	getCartCount = () => {
@@ -173,7 +112,7 @@ class App extends React.Component {
 		this.db
 			.collection('products')
 			.add({
-				img: '',
+				img: 'https://media.wired.com/photos/5b64db3717c26f0496f4d62d/125:94/w_1976,h_1486,c_limit/Canon-G7XII-SOURCE-Canon.jpg',
 				price: 900,
 				qty: 3,
 				title: 'Camera'
