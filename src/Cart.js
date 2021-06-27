@@ -7,7 +7,7 @@ const Cart = (props) => {
         <div className="cart">
             { products.map((product) => {
                 return (
-                    <CartItem 
+                    <CartItem style={styles.cartItem}
                         product = {product}
                         key = {product.id}
                         onIncreaseQuantity = {props.onIncreaseQuantity}
@@ -19,6 +19,13 @@ const Cart = (props) => {
             
         </div>
     );
+}
+
+const styles = {
+    cartItem: {
+        justifyContent: 'space-around',
+        alignItems: 'flex-end'
+    }
 }
 
 export default Cart;

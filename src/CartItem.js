@@ -5,10 +5,10 @@ const CartItem = (props) => {
     const { product, onIncreaseQuantity, onDecreaseQuantity, onDeleteProduct} = props;
     return (
         <div className="cart-item">
-            <div className="left-block">
+            <div className="top-block">
                 <img style={styles.image} src={product.img} alt={title}/>
             </div>
-            <div className="right-block">
+            <div className="bottom-block">
                 <div style={ {fontSize: 25} }>{title}</div>
                 <div style={ {color: '#777'} }>Rs {price}</div>
                 <div style={ {color: '#777'} }>Qty: {qty}</div>
@@ -41,10 +41,11 @@ const CartItem = (props) => {
 
 const styles = {
     image: {
-        height: 110,
-        width: 110,
+        maxHeight: 220,
+        maxWidth: 220,
         borderRadius: 4,
-        background: '#ccc'
+        background: '#ccc',
+        display: 'block'
     }
 }
 export default CartItem;
